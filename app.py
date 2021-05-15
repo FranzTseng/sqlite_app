@@ -48,12 +48,13 @@ while operation != "6":
         add_command(lan, com, des) 
         # fill in labels table
         labels = input("Enter label(split with ','): ").split(",")
-        add_label(labels)
+        if labels != [""]: 
+            add_label(labels)
         # fill in match table
-        command_id = get_command_id(com)
-        label_ids = get_label_id(labels)
-        for label_id in label_ids:
-            add_matching(command_id, label_id)
+            command_id = get_command_id(com)
+            label_ids = get_label_id(labels)
+            for label_id in label_ids:
+                add_matching(command_id, label_id)
     elif operation=="2":
         pass
     elif operation=="3":
