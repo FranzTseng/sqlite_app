@@ -44,9 +44,16 @@ while operation != "6":
         lan = input("Which language: ")
         com = input("Command: ")
         des = input("Enter command decription: ")
+        # fill in commands table
         add_command(lan, com, des) 
-        command_id = get_id(com)
-        prompt_new_label(command_id)
+        # fill in labels table
+        labels = input("Enter label(split with ','): ").split(",")
+        add_label(labels)
+        # fill in match table
+        command_id = get_command_id(com)
+        label_ids = get_label_id(labels)
+        for label_id in label_ids:
+            add_matching(command_id, label_id)
     elif operation=="2":
         pass
     elif operation=="3":
