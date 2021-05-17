@@ -47,16 +47,22 @@ while operation != "6":
         # fill in commands table
         add_command(lan, com, des) 
         # fill in labels table
-        labels = input("Enter label(split with ','): ").split(",")
-        if labels != [""]: 
-            add_label(labels)
+        label_list = print_label_menu()
+        label_ids = input(f"Enter your labels(seperate with ','): ").split(",")
+        command_id = get_command_id(com)
+        if str(len(label_list)) in label_ids:
+            labs = input(f"Enter new labels(seperate with ','): ").split(",")
+            add_label(*labs)
         # fill in match table
-            command_id = get_command_id(com)
-            label_ids = get_label_id(labels)
+            new_label_ids= get_label_id(labs)
             for label_id in label_ids:
-                add_matching(command_id, label_id)
+                add_matching(command_id, int(label_id))
+        else:
+            for label_id in label_ids:
+                add_matching(command_id, int(label_id))
     elif operation=="2":
         pass
+
     elif operation=="3":
         commands = show_commands()
         display_commands(commands)
