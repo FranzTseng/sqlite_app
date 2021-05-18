@@ -55,7 +55,7 @@ while operation != "6":
             add_label(*labs)
         # fill in match table
             new_label_ids= get_label_id(labs)
-            for label_id in label_ids:
+            for label_id in new_label_ids:
                 add_matching(command_id, int(label_id))
         else:
             for label_id in label_ids:

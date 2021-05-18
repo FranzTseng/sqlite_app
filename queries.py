@@ -56,10 +56,16 @@ def print_label_menu():
         # grab all current labels in labels table
         result = cursor.execute(SELECT_CURRENT_LABELS).fetchall()
         # add "Others" choice at the end of the tuple list
+    if result != []:
         result.insert(len(result), ((result[-1][0]+1),"Others"))
         label_menu = dict(result)
-    for n, (k, i) in enumerate(result,start=1):
-        print(f"{n}) {i}")
+    else: 
+        result.insert(0, (1, "Others"))
+        print("No label in the database, please choose 'others'")
+        label_menu = dict(result)
+    for k, i in result:
+        print(f"{k}) {i}")
+    
     return dict(result)
 # define function to add a label into the table
 # define a function to take multiple labels input and parse them to add_label function
