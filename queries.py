@@ -26,7 +26,7 @@ INSERT_COMMAND = """INSERT INTO commands (language, command, description)
                     VALUES (?,?,?);"""
 INSERT_LABEL = "INSERT INTO labels (label) VALUES (?);"
 INSERT_MATCHING = "INSERT INTO match (command_id, label_id) VALUES (?,?);"
-SHOW_COMMANDS = "SELECT * FROM commands"
+SHOW_COMMANDS = "SELECT * FROM commands;"
 SELECT_CURRENT_LABELS = """SELECT * FROM labels;"""
 GET_COMMAND_ID = "SELECT id FROM commands WHERE command=?;"
 GET_LABEL_ID = "SELECT id FROM labels WHERE label=?;"
@@ -76,18 +76,10 @@ def add_label(*args):
 #            if arg != "":
             cursor.execute(INSERT_LABEL, (arg,))
 # define functions for matching table        
-
-
-
 def add_matching(command_id,label_id):
     with conn:
         cursor = conn.cursor()
         cursor.execute(INSERT_MATCHING,(command_id, label_id))
-def show_commands():
-    with conn:
-        cursor = conn.cursor()
-        cursor.execute(SHOW_COMMANDS)
-        return cursor.fetchall()
 def get_command_id(com):
     with conn:
         cursor = conn.cursor()
@@ -104,4 +96,9 @@ def get_label_id(labs):
             lab_ids.append(lab_id)
     return lab_ids
 
-
+# define function to show all the data
+def show_commands():
+    with conn:
+        cursor = conn.cursor()
+        cursor.execute(SHOW_COMMANDS)
+        return cursor.fetchall()

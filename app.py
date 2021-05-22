@@ -5,8 +5,7 @@ import sqlite3
 
 # create a menu
 menu = """1) Add a new command
-2) Add a label to the command
-3) Display all commands
+2) Display all commands
 4) Search commands by labels
 5) Search commands by keywords
 6) Exit
@@ -20,21 +19,16 @@ create_tables()
 operation = input(menu)
 
 # create operation functions
-def prompt_new_label(command_id):
-    labels = input("Enter the label for the commands(split with ','): ").split(",")
-    for lab in labels:
-        add_label(lab,command_id)
-def display_commands(commands):
-    for row in commands:
+def display_commands(func):
+    for row in func():
         print("")
-        print(f"Type of language:{row[0]}")
-        print(f"labels: {row[3]}")
+        print(f"Type of language: \033[91m{row[1]}\033[0m")
         print("---------------------------------")
-        print(f"{row[1]}")
+        print(f"{row[0]}. \033[93m{row[2]}\033[0m")
         print("--  --  --  --  --  --  -- --  --")
-        print(f"{row[2]}") 
+        print(f"{row[3]}")
         print("---------------------------------")
-        print("\n\n") 
+        print("") 
 
 
 
@@ -61,7 +55,7 @@ while operation != "6":
             for label_id in label_ids:
                 add_matching(command_id, int(label_id))
     elif operation=="2":
-        pass
+        display_commands(show_commands)
 
     elif operation=="3":
         commands = show_commands()
