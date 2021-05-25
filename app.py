@@ -6,9 +6,9 @@ import sqlite3
 # create a menu
 menu = """1) Add a new command
 2) Display all commands
+3) Search commands by keywords
 4) Search commands by labels
-5) Search commands by keywords
-6) Exit
+5) Exit
 Select operation: """
 
 
@@ -16,11 +16,10 @@ Select operation: """
 create_tables()
 
 
-operation = input(menu)
 
 # create operation functions
-def display_commands(func):
-    for row in func():
+def display_commands(commands):
+    for row in commands:
         print("")
         print(f"Type of language: \033[91m{row[1]}\033[0m")
         print("---------------------------------")
@@ -33,6 +32,7 @@ def display_commands(func):
 
 
 # menu selections
+operation = input(menu)
 while operation != "6":
     if operation=="1":
         lan = input("Which language: ")
@@ -55,11 +55,14 @@ while operation != "6":
             for label_id in label_ids:
                 add_matching(command_id, int(label_id))
     elif operation=="2":
-        display_commands(show_commands)
+        all_commands = show_commands()
+        display_commands(all_commands)
 
     elif operation=="3":
-        commands = show_commands()
-        display_commands(commands)
+        keyword = input("Keyword: ")
+        seach_result = search_keywords(keyword)
+        display_commands(seach_result)
+
     elif operation=="4":
         pass
     elif operation=="5":

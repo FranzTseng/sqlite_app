@@ -30,6 +30,7 @@ SHOW_COMMANDS = "SELECT * FROM commands;"
 SELECT_CURRENT_LABELS = """SELECT * FROM labels;"""
 GET_COMMAND_ID = "SELECT id FROM commands WHERE command=?;"
 GET_LABEL_ID = "SELECT id FROM labels WHERE label=?;"
+SEARCH_KEYWORDS = " SELECT * FROM commands WHERE command LIKE ? OR description LIKE ?;"
 
 # establish connection
 conn = sqlite3.connect("data.db")
@@ -101,4 +102,11 @@ def show_commands():
     with conn:
         cursor = conn.cursor()
         cursor.execute(SHOW_COMMANDS)
+        return cursor.fetchall()
+
+# define function for searching through keywords
+def search_keywords(keyword):
+    with conn:
+        cursor = conn.cursor()
+        cursor.execute(SEARCH_KEYWORDS, (f"%{keyword}%",f"%{keyword}%"))
         return cursor.fetchall()
