@@ -31,6 +31,10 @@ SELECT_CURRENT_LABELS = """SELECT * FROM labels;"""
 GET_COMMAND_ID = "SELECT id FROM commands WHERE command=?;"
 GET_LABEL_ID = "SELECT id FROM labels WHERE label=?;"
 SEARCH_KEYWORDS = " SELECT * FROM commands WHERE command LIKE ? OR description LIKE ?;"
+SEARCH_LABELS = """SELECT commands.*, labels.label FROM commands
+                   JOIN match ON commands.id = match.command_id
+                   JOIN labels ON match.label_id = labels.id
+                   WHERE label = ?;"""
 
 # establish connection
 conn = sqlite3.connect("data.db")
@@ -104,9 +108,19 @@ def show_commands():
         cursor.execute(SHOW_COMMANDS)
         return cursor.fetchall()
 
-# define function for searching through keywords
+# define a function for searching through keywords
 def search_keywords(keyword):
     with conn:
         cursor = conn.cursor()
         cursor.execute(SEARCH_KEYWORDS, (f"%{keyword}%",f"%{keyword}%"))
         return cursor.fetchall()
+
+# define a function for searching through labels
+def search_labels(label):
+    with conn:
+        cursor = conn.cursor()
+        cursor.execute(SEARCH_LABELS, (label,))
+        return cursor.fetchall()
+
+
+

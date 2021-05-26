@@ -33,7 +33,7 @@ def display_commands(commands):
 
 # menu selections
 operation = input(menu)
-while operation != "6":
+while operation != "5":
     if operation=="1":
         lan = input("Which language: ")
         com = input("Command: ")
@@ -64,8 +64,10 @@ while operation != "6":
         display_commands(seach_result)
 
     elif operation=="4":
-        pass
-    elif operation=="5":
-        pass
+        label = input("Enter the label: ")
+        search_result = search_labels(label)
+        print(f"\nCommands labeled with \033[1m{label}\033[0m are as follow: ")
+        print("---------------------------------------------------------------")
+        display_commands(search_result)
     operation = input(menu)
 
